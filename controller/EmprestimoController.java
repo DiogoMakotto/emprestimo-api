@@ -2,6 +2,7 @@ package br.com.diogomakotto.emprestimoapi.controller;
 
 import br.com.diogomakotto.emprestimoapi.entity.Emprestimo;
 import br.com.diogomakotto.emprestimoapi.service.EmprestimoService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class EmprestimoController {
     }
 
     @PostMapping
-    List<Emprestimo> create(@RequestBody Emprestimo emprestimo){
+    List<Emprestimo> create(@RequestBody @Valid Emprestimo emprestimo){
         return emprestimoService.create(emprestimo);
     }
 
