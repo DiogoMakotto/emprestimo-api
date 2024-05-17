@@ -9,7 +9,6 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank
     private String nome;
     @NotBlank
@@ -17,6 +16,9 @@ public class Emprestimo {
     @NotBlank
     private String rendaMensal;
 
+    public Emprestimo(){
+
+    }
     public Emprestimo(String nome, String valorEmprestimoDesejado, String rendaMensal) {
         this.nome = nome;
         this.valorEmprestimoDesejado = valorEmprestimoDesejado;
