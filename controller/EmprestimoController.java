@@ -3,6 +3,7 @@ package br.com.diogomakotto.emprestimoapi.controller;
 import br.com.diogomakotto.emprestimoapi.entity.Emprestimo;
 import br.com.diogomakotto.emprestimoapi.service.EmprestimoService;
 import jakarta.validation.Valid;
+import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/emprestimos")
 public class EmprestimoController {
-    private EmprestimoService emprestimoService;
+    private final EmprestimoService emprestimoService;
 
     public EmprestimoController(EmprestimoService emprestimoService) {
         this.emprestimoService = emprestimoService;
@@ -34,5 +35,10 @@ public class EmprestimoController {
     @DeleteMapping("{id}")
     List<Emprestimo> delete(@PathVariable("id") Long id){
         return emprestimoService.delete(id);
+    }
+
+    @PostMapping("/calcular")
+    public String calcularEmprestimo(@RequestBody Emprestimo emprestimo) throws JSONException {
+        return emprestimoService.calcularEmprestimo(emprestimo);
     }
 }

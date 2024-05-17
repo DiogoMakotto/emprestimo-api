@@ -1,8 +1,7 @@
 # 🏦 API de Empréstimos ☕ 
 
 ## Descrição
-Esta é uma API de Empréstimos que permite a criação, listagem, atualização e exclusão. A aplicação foi desenvolvida utilizando Spring Boot e permite a interação com um banco de dados para armazenar e gerenciar os dados dos empréstimos.
-
+Esta é uma API de Empréstimos que permite a criação, listagem, atualização, exclusão e cálculo de aprovação de empréstimos com base na renda mensal do solicitante. A API foi desenvolvida utilizando Spring Boot e permite a interação com um banco de dados para armazenar e gerenciar os dados dos empréstimos.
 ## ⚙ Tecnologias Utilizadas
 
 - [**Java 17**](https://docs.oracle.com/en/java/javase/17/)
@@ -13,7 +12,7 @@ Esta é uma API de Empréstimos que permite a criação, listagem, atualização
 ### **Banco de dados e Documentação:**
 - [**Mysql**](https://dev.mysql.com/downloads/)
 - [**H2 Database**](https://www.h2database.com/html/main.html) (para testes)
-- [**SpringDoc OpenAPI 3**](https://springdoc.org/v2/#spring-webflux-support)
+- [**SpringDoc OpenAPI 3**](https://springdoc.org/v2/#spring-webflux-support) (Swagger)
 
 
 
@@ -37,9 +36,7 @@ Esta é uma API de Empréstimos que permite a criação, listagem, atualização
     - A API estará disponível em: `http://localhost:8080`
     - A documentação Swagger estará disponível em: `http://localhost:8080/swagger-ui.html`
 
-## API Endpoints
-
-### Emprestimos
+## API Endpoints - Emprestimos
 
 - **POST /emprestimos**
 
@@ -47,13 +44,15 @@ Esta é uma API de Empréstimos que permite a criação, listagem, atualização
     - **Corpo da Requisição:**
 
 ~~~JSON
-{
-  "nome": "João Silva",
-  "valorEmprestimoDesejado": "30000.0",
-  "rendaMensal": "5000.0"
-}
+[
+  {
+    "nome": "João Silva",
+    "valorEmprestimoDesejado": "30000.0",
+    "rendaMensal": "5000.0"
+  }
+]
 ~~~
-- **Resposta:**
+**Resposta:**
 ~~~JSON
 [
   {
@@ -67,8 +66,9 @@ Esta é uma API de Empréstimos que permite a criação, listagem, atualização
 
 - **GET /emprestimos**
 
-- **Descrição:** Lista todos os empréstimos.
-- **Resposta:**
+  - **Descrição:** Lista todos os empréstimos.
+  
+**Resposta:**
 ~~~json
 [
     {
@@ -82,16 +82,18 @@ Esta é uma API de Empréstimos que permite a criação, listagem, atualização
 
 - **PUT /emprestimos**
 
-- **Descrição:** Atualiza um empréstimo existente.
+  - **Descrição:** Atualiza um empréstimo existente.
 ~~~Json
-{
-  "id": 1,
-  "nome": "João Silva",
-  "valorEmprestimoDesejado": "35000.0",
-  "rendaMensal": "5000.0"
-}
+[
+  {
+    "id": 1,
+    "nome": "João Silva",
+    "valorEmprestimoDesejado": "35000.0",
+    "rendaMensal": "5000.0"
+  }
+]
 ~~~
-Resposta:
+**Resposta:**
 ~~~Json
 [
   {
@@ -106,7 +108,8 @@ Resposta:
 - **DELETE /emprestimos/{id}**
 
   - **Descrição:** Deleta um empréstimo pelo ID.
-  - **Resposta:**
+  
+**Resposta:**
 ~~~Json
 [
   {
@@ -116,3 +119,27 @@ Resposta:
     "rendaMensal": "4500.0"
   }
 ]
+~~~
+
+- **POST /emprestimos/calcular**
+
+  - **Descrição:** Calcula se o empréstimo solicitado pode ser aprovado com base na renda mensal do solicitante.
+  - **Corpo da Requisição**
+~~~Json
+[
+    {
+      "nome": "João Silva",
+      "valorEmprestimoDesejado": "30000.0",
+      "rendaMensal": "5000.0"
+    }
+]
+~~~
+**Resposta:**
+~~~Json
+[
+  {
+    "valorMaximoEmprestimo": 31730.18,
+    "aprovado": true
+  }
+]
+~~~
